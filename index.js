@@ -1,38 +1,20 @@
-const Sequelize = require('sequelize');
+const express = require('express');
+const cors = require('cors');
 
-const sequelize = new Sequelize('sequelize-training', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
+const app = express();
+
+// middleware
+
+app.use(express.json());
+
+app.use(express.urlencoded({extended: true}));
+
+//port
+
+const PORT = process.env.PORT || 3000;
+
+// server
+
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}...`)
 });
-
-
-// sequelize.authenticate()
-//     .then(() => {
-//         console.log('Sequelize authenticated successfully.');
-//     })
-//     .catch((err) => {
-//         console.error('Unable to connect to the database:', err);
-//     });
-
-const User = sequelize.define('User', {
-    username: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-    },
-    password: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-    },
-    age: {
-        type: Sequelize.DataTypes.INTEGER,
-        defaultValue: 21,
-    }
-});
-
-User.sync()
-    .then(() => {
-        console.log('User successfully created!');
-    }).catch(err => {
-    console.log('User failed with error: ' + err)
-});
-
